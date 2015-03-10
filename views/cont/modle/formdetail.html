@@ -1,0 +1,71 @@
+<div class="alert alert-success hide">
+    <button class="close" data-dismiss="alert"></button>
+    <span>保存成功.</span>
+</div>
+<form id="form<%=tableid%>" action="defs/formpost?tableid=<%=tableid%>&recid=<%=recid%>" method="post" class="form-horizontal">
+
+    <div class="row-fluid">
+    <% for(var i=0; i < columns.length; i++ ) {%>
+    <% if (columns[i].enable==1){%>
+    <% if(columns[i].type=='text'){%>
+        <div class="span6">
+            <div class="control-group">
+                <label class="control-label  span2"><%=columns[i].title%></label>
+                <div class="controls span9">
+                    <input name="<%=columns[i].id%>" type="text" class="m-wrap span10" value="<%= eval('data.'+columns[i].id) %>" />
+                </div>
+            </div>
+        </div>
+    <%}%>
+    <% if(columns[i].type=='select'){%>
+        <div class="span6">
+            <div class="control-group">
+                <label class="control-label  span2"><%=columns[i].title%></label>
+                <div class="controls span9">
+                    <select name="<%=columns[i].id%>" class="m-wrap span10" tabindex="1">
+                        <% for (var j=0; j < columns[i].options.length; j++ ){ %>
+                        <option value=" <%= columns[i].options[j].id %>" <% if(eval('data.'+columns[i].id)==columns[i].options[j].id){%> selected <%}%>><%= columns[i].options[j].val %></option>
+                        <% } %>
+                    </select>
+                </div>
+            </div>
+        </div>
+    <%}%>
+    <% if(columns[i].type=='checkbox'){%>
+        <div class="span6">
+            <div class="control-group">
+                <label class="control-label  span2">&nbsp;</label>
+                <label class="checkbox"><span>
+                    <input type="checkbox" onclick="javascript:$(this).next().val(this.checked?1:0);" value="1" <% if(eval('data.'+columns[i].id)==1){%> checked <%}%> />
+                    <input type="hidden" name="<%=columns[i].id%>" value="<%=eval('data.'+columns[i].id)%>">
+                </span> <%=columns[i].title%></label>
+            </div>
+        </div>
+    <%}%>
+    <% if(columns[i].type=='textarea'){%>
+        <div class="span6">
+            <div class="control-group">
+                <label class="control-label  span2"><%=columns[i].title%></label>
+                <div class="controls span9">
+                    <textarea name="<%=columns[i].id%>" class="m-wrap span12" rows="3"><%= eval('data.'+columns[i].id) %></textarea>
+                </div>
+            </div>
+        </div>
+    <%}%>
+    <%if(i%2==1){%>
+    </div><div class="row-fluid">
+    <% } %>
+    <% }%>
+    <% }%>
+    </div>
+    <div class="form-actions">
+        <button onclick="javascript:save();" type="button" class="btn blue"><i class="icon-ok"></i> 保存</button>
+        <button onclick="javascript:loaddiv('tab_form','defs/formdetail?tableid=<%=tableid%>&recid=<%=recid%>');"type="button" class="btn">刷新</button>
+    </div>
+</form>
+<script language="javascript">
+    var save=function(){
+        var frm=$('#form<%=tableid%>');
+        savediv('tab_form',frm.attr('action'),frm.serialize());
+    }
+</script>

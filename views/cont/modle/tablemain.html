@@ -1,0 +1,66 @@
+<div class="portlet box grey">
+<div class="portlet-title">
+    <div class="caption"><i class="icon-cogs"></i>业务名称</div>
+    <div class="actions">
+        <a href="javascript:addmain('<%=tableid%>');" class="btn blue"><i class="icon-pencil"></i>增加</a>
+        <div class="btn-group">
+            <a class="btn green" href="#" data-toggle="dropdown">
+                <i class="icon-cogs"></i> 工具
+                <i class="icon-angle-down"></i>
+            </a>
+            <ul class="dropdown-menu pull-right">
+                <li><a href="#"><i class="icon-trash"></i> 全部删除</a></li>
+                <li class="divider"></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="portlet-body no-more-tables">
+<table class="table-bordered table-striped table-condensed cf">
+<thead class="cf">
+<tr>
+    <th>序号</th>
+    <%for(var j=0; j < columns.length; j++){%>
+    <th><%= columns[j].title %></th>
+    <% }%>
+    <th></th>
+</tr>
+</thead>
+<tbody>
+<% for(var i = 0 ; i < rows.length ; i++){ %>
+<tr id="<%=rows[i].id%>">
+    <td data-title="序号"><%=i+1%></td>
+    <%for(var j=0; j < columns.length; j++){%>
+    <td data-title="<%= columns[j].title %>"><%= eval("rows[i]."+columns[j].id) %></td>
+    <% }%>
+    <td data-title="操作">
+        <a href="javascript:view(<%=rows[i].id%>);"><i class="icon-pencil"></i> 查看</a>
+        <a href="javascript:del(<%=rows[i].id%>);"><i class="icon-trash"></i> 删除</a>
+    </td>
+</tr>
+<% } %>
+</tbody>
+</table>
+</div>
+    <p id="dynamic_pager_demo2" class="pagination"></p>
+</div>
+<script language="jscript">
+    $('#dynamic_pager_demo2').bootpag({
+        total: <%= totalnum %>,
+        page: <%= pagenum %>,
+        maxVisible: 6
+    }).on('page', function(event, num){
+        load('defs/tablemain?tableid=<%=tableid%>',{id:$("#activemenu").val(),mdl:$('#activemodule').val()},{pagenum:num}) // or some ajax content loading...
+    });
+   // alert(1);
+    var addmain = function(recid){
+        load('defs/formguide',{id:$("#activemenu").val(),mdl:$('#activemodule').val()},{});
+    }
+    var view = function(id){
+        load('defs/formmain?tableid=<%=tableid%>&recid='+id,{id:$("#activemenu").val(),mdl:$('#activemodule').val()},{});
+    }
+    var del = function(id){
+       // load('form2',{id:$("#activemenu").val(),mdl:$('#activemodule').val()},{});
+    }
+
+</script>

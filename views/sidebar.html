@@ -1,0 +1,75 @@
+<div class="page-sidebar nav-collapse collapse">
+<ul class="page-sidebar-menu">
+<li>
+    <div class="sidebar-toggler hidden-phone"></div>
+</li>
+<li>
+    <form class="sidebar-search">
+        <div class="input-box">
+            <a href="javascript:;" class="remove"></a>
+            <input type="text" placeholder="Search..." />
+            <input type="button" class="submit" value=" " />
+        </div>
+    </form>
+</li>
+<input type="hidden" id="activemenu" value="0"/>
+<input type="hidden" id="activemodule" value="0"/>
+<li id="m0" class="active">
+    <a href="">
+        <i class="icon-home"></i>
+        <span class="title">个人中心</span>
+        <span class="selected"></span>
+    </a>
+</li>
+
+<%
+for (var i = 0; i < menus.length; i++) {
+if (menus[i].pid == 0) {
+%>
+<li id="m<%= menus[i].id %>">
+    <a href="javascript:load('<%= menus[i].url %>',{id:'<%= menus[i].id %>',mdl:'<%=menus[i].id%>'})">
+        <i class="icon-<%=menus[i].ico%>"></i>
+        <span class="title"><%=menus[i].name%></span>
+        <span id="ms<%= menus[i].id %>"></span>
+        <% if (menus[i].haschild == 1) {%>
+        <span class="arrow"></span>
+        <% } %>
+    </a>
+    <%  if (menus[i].haschild == 1) { %>
+    <ul class="sub-menu">
+        <%
+        for (var j = 0; j < menus.length; j++) {
+        if (menus[j].pid == menus[i].id) { %>
+        <li id="m<%= menus[j].id %>">
+            <a href="javascript:load('<%= menus[j].url %>',{id:'<%= menus[j].id %>',mdl:'<%=menus[i].id%>'})">
+                <i class="icon-<%= menus[j].ico %>"></i>
+                <%= menus[j].name %>
+                <% if (menus[j].haschild == 1) {%>
+                <span class="arrow"></span>
+                <% } %>
+            </a>
+            <% if (menus[j].haschild == 1) { %>
+            <ul class="sub-menu">
+                <%
+                for (var k = 0; k < menus.length; k++) {
+                if (menus[k].pid == menus[j].id) { %>
+                <li id="m<%= menus[k].id %>">
+                    <a href="javascript:load('<%= menus[k].url %>',{id:'<%= menus[k].id %>',mdl:'<%=menus[i].id%>'})">
+                        <i class="icon-<%= menus[k].ico %>"></i>
+                        <%= menus[k].name %>
+                    </a>
+                </li>
+                <% }} %>
+            </ul>
+            <% } %>
+        </li>
+        <% }} %>
+    </ul>
+    <% } %>
+</li>
+<% }} %>
+
+</ul>
+<!-- END SIDEBAR MENU -->
+</div>
+<!-- END SIDEBAR -->

@@ -1,0 +1,60 @@
+<div class="portlet box grey">
+<div class="portlet-title">
+    <div class="caption"><i class="icon-cogs"></i>业务名称</div>
+    <div class="actions">
+        <a href="javascript:add();" class="btn blue"><i class="icon-pencil"></i>增加</a>
+        <div class="btn-group">
+            <a class="btn green" href="#" data-toggle="dropdown">
+                <i class="icon-cogs"></i> 工具
+                <i class="icon-angle-down"></i>
+            </a>
+            <ul class="dropdown-menu pull-right">
+                <li><a href="#"><i class="icon-pencil"></i> Edit</a></li>
+                <li><a href="#"><i class="icon-trash"></i> Delete</a></li>
+                <li><a href="#"><i class="icon-ban-circle"></i> Ban</a></li>
+                <li class="divider"></li>
+                <li><a href="#"><i class="i"></i> Make admin</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="portlet-body no-more-tables">
+<table class="table-bordered table-striped table-condensed cf">
+<thead class="cf">
+<tr>
+    <th>序号</th>
+    <%for(var j=0; j < dtlcolumns.length; j++){%>
+    <th><%= dtlcolumns[j].title %></th>
+    <% }%>
+    <th></th>
+</tr>
+</thead>
+<tbody>
+<% for(var i = 1 ; i < rows.length ; i++){ %>
+<tr id="<%=rows[i].id%>">
+    <td data-title="序号"><%=i%></td>
+    <%for(var j=0; j < dtlcolumns.length; j++){%>
+    <td data-title="<%= columns[j].title %>"><%= eval("rows[i]."+dtlcolumns[j].id) %></td>
+    <% }%>
+    <td data-title="操作">
+        <a href="javascript:view();"><i class="icon-pencil"></i> 查看</a>
+        <a href="javascript:del();"><i class="icon-trash"></i> 删除</a>
+    </td>
+</tr>
+<% } %>
+</tbody>
+</table>
+</div>
+</div>
+<script language="jscript">
+    var add = function(){
+        load('formguide',{id:$("#activemenu").val(),mdl:$('#activemodule').val()},{});
+    }
+    var view = function(){
+        load('formmain',{id:$("#activemenu").val(),mdl:$('#activemodule').val()},{});
+    }
+    var del = function(){
+       // load('form2',{id:$("#activemenu").val(),mdl:$('#activemodule').val()},{});
+    }
+
+</script>

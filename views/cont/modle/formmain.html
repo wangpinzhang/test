@@ -1,0 +1,47 @@
+<div class="portlet box blue">
+    <div class="portlet-title">
+        <div class="caption"><i class="icon-reorder"></i>业务表单</div>
+        <div class="tools">
+            <li onclick="javascript:back()" class="icon-remove"></li>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="row-fluid">
+            <div class="span12">
+                <!--BEGIN TABS-->
+                <div class="tabbable tabbable-custom">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#tab_form" data-toggle="tab">基本信息</a></li>
+                        <% for(var i=0; i<dtls.length; i++) { %>
+                        <li id="navtab_<%=dtls[i].id%>" onclick="javascript:loaddiv('tab_<%=dtls[i].id%>','defs/tabledetail?tableid=<%=dtls[i].id%>&recid=<%=recid%>&mid=<%=dtls[i].mid%>');">
+                            <a href="#tab_<%=dtls[i].id%>" data-toggle="tab"><%=dtls[i].title%></a></li>
+                        <% } %>
+                        <li onclick="javascript:loaddiv('tab_attach','defs/attachdetail?tableid=<%=tableid%>&recid=<%=recid%>');">
+                            <a href="#tab_attach" data-toggle="tab">附件</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab_form">
+                            <%- include formdetail.html %>
+                        </div>
+                        <% for(var i=0; i<dtls.length; i++) { %>
+                        <div class="tab-pane " id="tab_<%=dtls[i].id%>">
+
+                        </div>
+                        <% } %>
+                        <div class="tab-pane " id="tab_attach">
+
+                        </div>
+                    </div>
+                </div>
+                <!--END TABS-->
+            </div>
+            <div class="space10 visible-phone"></div>
+        </div>
+    </div>
+</div>
+
+<script language="jscript">
+    var back=function(){
+        load('defs/tablemain?tableid=<%=tableid%>',{id:$("#activemenu").val(),mdl:$('#activemodule').val()},{});
+    }
+</script>
